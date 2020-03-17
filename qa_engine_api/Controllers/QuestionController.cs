@@ -27,6 +27,13 @@ namespace qa_engine_api.Controllers
             return new QuestionRepo(_context).GetAll().ToList();
         }
 
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult GetQuestion(long id) 
+        {
+            return new ObjectResult(new QuestionRepo(_context).GetById(id));
+        }
+
         [HttpPost]
         [Route("Create")]
         public IActionResult Create([FromBody]Question newQuestion)

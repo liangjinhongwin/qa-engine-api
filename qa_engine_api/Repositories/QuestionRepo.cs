@@ -51,6 +51,35 @@ namespace qa_engine_api.Repositories
             return _context.Questions.FirstOrDefault(q => q.Id == id);
         }
 
+        public QuestionVM GetById(long id)
+        {
+            QuestionVM question = _context.Questions.Where(q=>q.Id==id).Select(q => new QuestionVM()
+            {
+                Id = q.Id,
+                Description = q.Description,
+                CreatedOn = q.CreatedOn,
+                User = new UserVM()
+                {
+                    UserName = q.User.UserName,
+                    CreatedOn = q.User.CreatedOn
+                },
+                Answers = q.Answers.Select(a => new AnswerVM()
+                {
+                    Id = a.Id,
+                    Description = a.Description,
+                    CreatedOn = a.CreatedOn,
+                    User = new UserVM()
+                    {
+                        UserName = a.User.UserName,
+                        CreatedOn = a.User.CreatedOn
+                    },
+                    Vote = a.Vote
+                })
+            }).FirstOrDefault();
+
+            return question;
+        }
+
         public bool Add(Question question)
         {
             try
