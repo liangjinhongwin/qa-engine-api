@@ -53,7 +53,7 @@ namespace qa_engine_api.Repositories
 
         public QuestionVM GetById(long id)
         {
-            QuestionVM question = _context.Questions.Where(q=>q.Id==id).Select(q => new QuestionVM()
+            QuestionVM question = _context.Questions.Where(q => q.Id == id).Select(q => new QuestionVM()
             {
                 Id = q.Id,
                 Description = q.Description,
