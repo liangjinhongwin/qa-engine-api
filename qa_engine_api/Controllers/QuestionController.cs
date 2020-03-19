@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using qa_engine_api.Models;
 using qa_engine_api.Repositories;
 using qa_engine_api.Services;
 using qa_engine_api.ViewModels;
@@ -32,6 +33,17 @@ namespace qa_engine_api.Controllers
         public IActionResult GetQuestion(long id) 
         {
             return new ObjectResult(new QuestionRepo(_context).GetById(id));
+        }
+
+        [HttpGet]
+        [Route("Search/{keyword}")]
+        public IActionResult SearchQuestions(string keyword)
+        {
+            if (keyword == null ||  keyword == "")
+            {
+                return BadRequest();
+            }
+            return Ok(new QuestionRepo(_context).Search(keyword).ToList());
         }
 
         [HttpPost]
@@ -73,6 +85,24 @@ namespace qa_engine_api.Controllers
             }
 
             if(!new QuestionRepo(_context).Update(updatedQuestion))
+            {
+                return NoContent();
+            }
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("Delete")]
+        public IActionResult Delete([FromBody]Question deletedQuestion)
+        {
+            Question question = new QuestionRepo(_context).Get(deletedQuestion.Id);
+            if (question.UserName != deletedQuestion.UserName)
+            {
+                return Unauthorized();
+            }
+
+            if (!new QuestionRepo(_context).Delete(deletedQuestion.Id))
             {
                 return NoContent();
             }

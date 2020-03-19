@@ -9,7 +9,7 @@ using qa_engine_api.Services;
 namespace qa_engine_api.Migrations
 {
     [DbContext(typeof(QaEngineContext))]
-    [Migration("20200312110117_InitialCreate")]
+    [Migration("20200319004800_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace qa_engine_api.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
-            modelBuilder.Entity("qa_engine_api.Services.Answer", b =>
+            modelBuilder.Entity("qa_engine_api.Models.Answer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -42,7 +42,7 @@ namespace qa_engine_api.Migrations
                     b.ToTable("Answers");
                 });
 
-            modelBuilder.Entity("qa_engine_api.Services.Question", b =>
+            modelBuilder.Entity("qa_engine_api.Models.Question", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -60,16 +60,12 @@ namespace qa_engine_api.Migrations
                     b.ToTable("Questions");
                 });
 
-            modelBuilder.Entity("qa_engine_api.Services.User", b =>
+            modelBuilder.Entity("qa_engine_api.Models.User", b =>
                 {
                     b.Property<string>("UserName")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedOn");
-
-                    b.Property<string>("FirstName");
-
-                    b.Property<string>("LastName");
 
                     b.Property<string>("Password");
 
@@ -78,25 +74,25 @@ namespace qa_engine_api.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("qa_engine_api.Services.Answer", b =>
+            modelBuilder.Entity("qa_engine_api.Models.Answer", b =>
                 {
-                    b.HasOne("qa_engine_api.Services.Question", "Question")
+                    b.HasOne("qa_engine_api.Models.Question", "Question")
                         .WithMany("Answers")
                         .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("qa_engine_api.Services.User", "User")
+                    b.HasOne("qa_engine_api.Models.User", "User")
                         .WithMany("Answers")
                         .HasForeignKey("UserName")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("qa_engine_api.Services.Question", b =>
+            modelBuilder.Entity("qa_engine_api.Models.Question", b =>
                 {
-                    b.HasOne("qa_engine_api.Services.User", "User")
+                    b.HasOne("qa_engine_api.Models.User", "User")
                         .WithMany("Questions")
                         .HasForeignKey("UserName")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

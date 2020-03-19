@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using qa_engine_api.Models;
 using qa_engine_api.Services;
 using qa_engine_api.ViewModels;
 using System;
@@ -20,6 +21,35 @@ namespace qa_engine_api.Repositories
         public IEnumerable<QuestionVM> GetAll()
         {
             IEnumerable<QuestionVM> qList = _context.Questions.Select(q => new QuestionVM()
+            {
+                Id = q.Id,
+                Description = q.Description,
+                CreatedOn = q.CreatedOn,
+                User = new UserVM()
+                {
+                    UserName = q.User.UserName,
+                    CreatedOn = q.User.CreatedOn
+                },
+                Answers = q.Answers.Select(a => new AnswerVM()
+                {
+                    Id = a.Id,
+                    Description = a.Description,
+                    CreatedOn = a.CreatedOn,
+                    User = new UserVM()
+                    {
+                        UserName = a.User.UserName,
+                        CreatedOn = a.User.CreatedOn
+                    },
+                    Vote = a.Vote
+                })
+            });
+
+            return qList;
+        }
+
+        public IEnumerable<QuestionVM> Search(string keyword)
+        {
+            IEnumerable<QuestionVM> qList = _context.Questions.Where(q => q.Description.Contains(keyword)).Select(q => new QuestionVM()
             {
                 Id = q.Id,
                 Description = q.Description,
@@ -120,7 +150,7 @@ namespace qa_engine_api.Repositories
             return true;
         }
 
-        public bool removeQuestion(long id)
+        public bool Delete(long id)
         {
             try
             {

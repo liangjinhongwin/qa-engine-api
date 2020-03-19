@@ -13,8 +13,6 @@ namespace qa_engine_api.Migrations
                 {
                     UserName = table.Column<string>(nullable: false),
                     Password = table.Column<string>(nullable: true),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -40,7 +38,7 @@ namespace qa_engine_api.Migrations
                         column: x => x.UserName,
                         principalTable: "Users",
                         principalColumn: "UserName",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,13 +61,13 @@ namespace qa_engine_api.Migrations
                         column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Answers_Users_UserName",
                         column: x => x.UserName,
                         principalTable: "Users",
                         principalColumn: "UserName",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

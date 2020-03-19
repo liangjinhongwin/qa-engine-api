@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using qa_engine_api.Models;
 using qa_engine_api.Repositories;
 using qa_engine_api.Services;
 

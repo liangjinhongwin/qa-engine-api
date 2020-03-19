@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using qa_engine_api.Models;
 using qa_engine_api.Services;
 using qa_engine_api.ViewModels;
 using System;
@@ -27,8 +28,6 @@ namespace qa_engine_api.Repositories
             UserVM userVM = _context.Users.Where(u => u.UserName == userName.ToLower()).Select(user => new UserVM()
             {
                 UserName = user.UserName,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
                 CreatedOn = user.CreatedOn,
                 Questions = user.Questions.Select(q => new QuestionVM()
                 {
