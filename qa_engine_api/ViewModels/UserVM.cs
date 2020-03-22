@@ -9,8 +9,6 @@ namespace qa_engine_api.ViewModels
     public class UserVM
     {
         public string UserName { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
         public DateTime CreatedOn { get; set; }
         public IEnumerable<QuestionVM> Questions { get; set; }
         public IEnumerable<AnswerVM> Answers { get; set; }
