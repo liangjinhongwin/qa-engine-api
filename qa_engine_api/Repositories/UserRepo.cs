@@ -64,7 +64,7 @@ namespace qa_engine_api.Repositories
                     CreatedOn = a.CreatedOn,
                     Question = new QuestionVM()
                     {
-                        Id = a.Id,
+                        Id = a.Question.Id,
                         Description = a.Question.Description,
                         User = new UserVM()
                         {
@@ -81,8 +81,7 @@ namespace qa_engine_api.Repositories
                             {
                                 UserName = ans.User.UserName,
                                 CreatedOn = ans.User.CreatedOn
-                            },
-                            Vote = ans.Vote
+                            }
                         })
                     }
                 })

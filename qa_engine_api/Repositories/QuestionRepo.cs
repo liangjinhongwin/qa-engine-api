@@ -68,8 +68,7 @@ namespace qa_engine_api.Repositories
                     {
                         UserName = a.User.UserName,
                         CreatedOn = a.User.CreatedOn
-                    },
-                    Vote = a.Vote
+                    }
                 })
             });
 
